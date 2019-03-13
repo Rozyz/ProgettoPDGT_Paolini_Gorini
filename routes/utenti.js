@@ -1,15 +1,16 @@
 //
 const express = require('express')
 const mysql = require('mysql')
-
+const config = require('../configurazione.js')
 const router = express.Router()
+
 // Costante che contiene le info per la connessione al DB di heroku
 const pool = mysql.createPool({
     connectionLimit: 10,
-    host: 'us-cdbr-iron-east-03.cleardb.net',
-    user: 'b8b17ae25e2744',
-    password: '58d1b5dd',
-    database: 'heroku_415db843f7283ae'
+    host: config.my_host(),
+    user: config.my_user(),
+    password: config.my_pass(),
+    database: config.my_db()
 })
 
 
