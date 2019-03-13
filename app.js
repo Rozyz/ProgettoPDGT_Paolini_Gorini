@@ -7,7 +7,7 @@ app.get("/",(req,res) => {
 })
 
 app.get("/utenti",(req,res) => {
-  res.send(" ")
+  res.send("Lista utenti")
 })
 
 const PORT = process.env.PORT || 3000
