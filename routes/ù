@@ -28,7 +28,7 @@ router.get("/utenti", (req, res) => {
     })
   })
 
-/*router.get("/c", (req, res) => {
+router.get("/c", (req, res) => {
    const connection = getConnection()
    const queryString = "CREATE TABLE prenotazione(data DATETIME PRIMARY KEY, idUtente int, FOREIGN KEY (idUtente) REFERENCES utente(id))"
    connection.query(queryString, (err, rows, fields) => {
@@ -38,20 +38,8 @@ router.get("/utenti", (req, res) => {
 	return
 	}
 	console.log("OK")
-   })
-})*/
-router.get("/prenotazioni", (req, res) => {
-   const connection = getConnection()
-   const queryString = "SELECT * FROM prenotazione"
-   connection.query(queryString, (err, rows, fields) => {
-   	if(err){
-	console.log("Err: " + err)
-	res.sendStatus(500)
-	return
-	}
-	res.json(rows)
-   })
-})
+   }
+}
 // Metodo get che ritorna in formato JSON l'utente con un determinato id
 router.get('/utente/:id', (req, res) => {
     console.log("Cerco utente con id: " + req.params.id)
@@ -98,32 +86,6 @@ router.post('/crea_utente', (req, res) => {
     })
   })
 
-/*router.get('/cancella', (req, res) => {
-    const queryString = "DELETE FROM prenotazione"
-    getConnection().query(queryString, (err, results, fields) => {
-        if(err) {
-        console.log("ERR: " + err)
-	res.sendStatus(500)
-	return
-        }
-	console.log("OK")
-    })
-})*/
-router.post('/crea_prenotazione', (req, res) => {
-    const id = req.body.idUtente
-    const data = req.body.data
-    const queryString = "INSERT INTO prenotazione VALUES (?, ?)"
-    getConnection().query(queryString, [data, id], (err, results, fields) => {
-        if (err) {
-	console.log("Errore in inserimento prenotazione: " + err)
-	res.sendStatus(500)
-	return
-	}
-	res.send("Nuova prenotazione inserita")
-	console.log("Nuova prenotazione inserita")
-	res.end()
-    })
-})
 // Funzione per gestire la connessione al DB di Heroku
 function getConnection() {
     return pool

@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const mysql = require('mysql')
 const bodyParser = require('body-parser')
-const router = require('./routes/user.js')
+const router = require('./routes/utenti.js')
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static('./public'))
