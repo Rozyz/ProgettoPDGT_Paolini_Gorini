@@ -1,8 +1,9 @@
 //
 const express = require('express')
 const mysql = require('mysql')
-const config = require('../configurazione.js')
+const config = require('../configuration.js')
 const router = express.Router()
+const request = require('request')
 
 // Costante che contiene le info per la connessione al DB di heroku
 const pool = mysql.createPool({
