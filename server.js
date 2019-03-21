@@ -14,14 +14,23 @@ firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
   databaseURL: "https://fuel-stations-italy.firebaseio.com"
 });
-
 var db = firebase.database();
 
-var ref = db.ref();
-ref.orderByChild("ccomune").equalTo("Lanciano").on("child_added", function(data) {
-  console.log(data.val().ccomune);
-})
-
+// GET: restituisce tutti i distributori di quel comune
+app.get("/:comune", (req, res)=>{
+	var ref = db.ref()
+	var store = {}
+	store = ["lista"] = []
+	var i = 0
+	ref.orderByChild("ccomune").equalTo(req.params.comune).on("child_added", function(data) {
+  		// CONTINUA QUI
+		//console.log(data.val())
+		//data["lista"][i]["ccomune"]
+		//string += data.val()
+	})
+	res.send(string)
+	//res.send("OK")
+}) 	
 /*
 ref.on("value",function(snapshot){
   console.log(snapshot.val());
