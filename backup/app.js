@@ -52,7 +52,7 @@ function rich(res){
 
 app.get("/", (req, res) => {
   /*console.log("Responding to root route") */
-  res.send("Hello")
+  res.send("Root route")
 })
 
 app.get("/titolo",(req,res)=>{
@@ -61,7 +61,7 @@ app.get("/titolo",(req,res)=>{
 
 
 
-const PORT = process.env.PORT || 3004
+const PORT = process.env.PORT || 3005
 // localhost:PORT
 app.listen(PORT, () => {
   console.log("Il server è online e ascolta sulla porta: " + PORT)

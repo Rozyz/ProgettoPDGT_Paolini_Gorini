@@ -29,11 +29,25 @@ router.get("/utenti", (req, res) => {
       res.json(rows)
     })
   })
-
-/*router.get("/c", (req, res) => {
+router.get("/prova", (req, res) => {
+	var fs = require("fs")
+	console.log("\n Start");
+	var contents = fs.readFileSync("file.json")
+	var jsonContent = JSON.parse(contents)
+	var i = 0
+	while (jsonContent[i]){
+		console.log(jsonContent[i].username)
+		console.log(jsonContent[i].email)
+		console.log(jsonContent[i].password)
+		i++
+	}
+	res.send("OK")
+})
+router.get("/c", (req, res) => {
    const connection = getConnection()
-   const queryString = "CREATE TABLE prenotazione(data DATETIME PRIMARY KEY, idUtente int, FOREIGN KEY (idUtente) REFERENCES utente(id))"
-   connection.query(queryString, (err, rows, fields) => {
+  const queryString = "CREATE TABLE prenotazione(data DATETIME PRIMARY KEY, idUtente int, FOREIGN KEY (idUtente) REFERENCES utente(id))"
+ // const queryString = "DROP TABLE utente"
+	connection.query(queryString, (err, rows, fields) => {
    	if(err){
 	console.log("Err: " + err)
 	res.sendStatus(500)
@@ -41,7 +55,7 @@ router.get("/utenti", (req, res) => {
 	}
 	console.log("OK")
    })
-})*/
+})
 router.get("/prenotazioni", (req, res) => {
    const connection = getConnection()
    const queryString = "SELECT * FROM prenotazione"
