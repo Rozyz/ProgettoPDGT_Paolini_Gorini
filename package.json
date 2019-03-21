@@ -12,6 +12,7 @@
     "async": "^2.6.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "firebase-admin": "^7.1.1",
     "mysql": "^2.16.0",
     "request": "^2.88.0",
     "riot-api-nodejs": "^2.1.0"
