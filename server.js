@@ -3,12 +3,16 @@ const express = require('express')
 const app = express()
 //const mysql = require('mysql')
 const bodyParser = require('body-parser')
-/*
+
 const request = require('request')
 const https = require('https')
-*/
+
 const firebase = require('firebase-admin')
 const serviceAccount = require('./serverfirebase.json')
+
+
+app.use(express.static('./public'))
+
 
 // Inizializzazione del DB di firebase
 firebase.initializeApp({
@@ -37,6 +41,22 @@ app.get("/:comune", (req, res)=>{
          })
 })
 
+
+
+app.post("/add", (req, res)=>{
+	const cnome = req.body.cnome
+	const ccomune = req.body.ccomune
+	const cprovincia = req.body.cprovincia
+
+	console.log(cnome)
+	console.log(ccomune)
+	console.log(cprovincia)
+	
+	var newPostRef = db.ref().push()
+	newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia})
+	
+	res.send("OK")
+})
 
 const PORT = process.env.PORT || 3009
 // localhost:PORT
