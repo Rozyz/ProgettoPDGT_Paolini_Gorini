@@ -12,5 +12,6 @@
   $name = $updateArray['message']['from']['first_name'];
   $text = $updateArray['message']['text'];
 
-  http_request("https://api.telegram.org/bot{$botToken}/sendMessage?chat_id=".$chatId."&text=ciao");
+  if($text == "Ciao")
+    http_request("https://api.telegram.org/bot{$botToken}/sendMessage?chat_id=".$chatId."&text=ciao");
  ?>
