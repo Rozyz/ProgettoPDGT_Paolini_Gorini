@@ -26,7 +26,7 @@ const db = firebase.database();
 const rootRef = firebase.database().ref();
 
 app.use(bodyParser.urlencoded({extended: false}))
-
+app.use(bodyParser.json())
 app.get("/", (req, res) => {
   /*console.log("Responding to root route") */
   res.send("Fuel stations")
@@ -55,30 +55,12 @@ app.post("/login", (req, res)=>{
 		})
 	})
 })
-/*app.post("/login", (req, res)=>{
-	const utente = req.body.username
-	const password = req.body.password
-
-	console.log(utente)
-	console.log(password)
-
-	if(utente == "paolo" && password == "danabella")
-		console.log("SI")
-	else
-		console.log("NO")
-
-	res.send("OK")
-})*/
-
 
 app.post("/add", verifyToken, (req, res)=>{
 	jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){
 			res.sendStatus(403)
 		}else{
-			// devo capire come utilizzare la post 
-			// ma l'auth funziona
-			/*
 			const cnome = req.body.cnome
 			const ccomune = req.body.ccomune
 			const cprovincia = req.body.cprovincia
@@ -89,7 +71,6 @@ app.post("/add", verifyToken, (req, res)=>{
 	
 			var newPostRef = db.ref().push()
 			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia})
-			*/
 			res.json({
 				authData 
 			})
