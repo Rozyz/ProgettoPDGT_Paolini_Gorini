@@ -33,13 +33,21 @@ app.get("/", (req, res) => {
 })
 
 // GET: restituisce tutti i distributori di quel comune
-app.get("/:comune", (req, res)=>{
-  rootRef.orderByChild("ccomune")
+app.get("/comune/:comune", (req, res)=>{
+  db.ref("/Stazioni").orderByChild("ccomune")
          .equalTo(req.params.comune)
          .once("value", snap => {
            console.log(snap.val())
            res.send(snap.val())
          })
+})
+app.get("/nome/:nome", (req, res)=>{
+	db.ref("/Stazioni").orderByChild("cnome")
+	.equalTo(req.params.nome)
+	.once("value", snap => {
+		console.log(snap.val())
+		res.send(snap.val())
+	})
 })
 app.post("/login", (req, res)=>{
 	// mock user
@@ -55,8 +63,29 @@ app.post("/login", (req, res)=>{
 		})
 	})
 })
+app.post("/user/add", verifyToken, (req, res)=>{
+	jwt.verify(req.token, 'secretkey', (err, authData)=>{
+		if(err){
+			res.sendStatus(403)
+		}else{
+			const id = req.body.id
+			const first_name = req.body.first_name
+			const last_name = req.body.last_name
 
-app.post("/add", verifyToken, (req, res)=>{
+			console.log(id)
+			console.log(first_name)
+			console.log(last_name)
+
+			var newPostRef = db.ref("/Users").push()
+			newPostRef.set({id: id, first_name : first_name, last_name : last_name})
+			res.json({
+				authData
+			})
+		}
+	})
+})
+
+app.post("/stazione/add", verifyToken, (req, res)=>{
 	jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){
 			res.sendStatus(403)
@@ -69,7 +98,7 @@ app.post("/add", verifyToken, (req, res)=>{
 			console.log(ccomune)
 			console.log(cprovincia)
 	
-			var newPostRef = db.ref().push()
+			var newPostRef = db.ref("/Stazioni").push()
 			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia})
 			res.json({
 				authData 
