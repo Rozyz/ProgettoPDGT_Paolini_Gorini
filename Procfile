@@ -1,2 +1,2 @@
 web: node server.js
-worker: php Fuel-Stations_BOT/index.php
+worker: vendor/bin/heroku-php-apache2
