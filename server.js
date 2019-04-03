@@ -93,15 +93,17 @@ app.post("/stazione/add", verifyToken, (req, res)=>{
 			const cnome = req.body.cnome
 			const ccomune = req.body.ccomune
 			const cprovincia = req.body.cprovincia
+      const cregione = req.body.cregione
+      const canno_inserimento = req.body.canno_inserimento      
 
 			console.log(cnome)
 			console.log(ccomune)
 			console.log(cprovincia)
-	
+
 			var newPostRef = db.ref("/Stazioni").push()
 			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia})
 			res.json({
-				authData 
+				authData
 			})
 		}
 	})

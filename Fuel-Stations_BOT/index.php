@@ -1,6 +1,8 @@
 <?php
   require_once(dirname(__FILE__).'/token.php');
   require_once(dirname(__FILE__).'/curl-lib.php');
+  require_once(dirname(__FILE__).'/funzioni.php');
+
 
   $stato = [];
 
@@ -17,13 +19,12 @@
   $website = "https://api.telegram.org/bot".$botToken;
   $update = http_request($website."/getupdates?offset=". ($last_update + 1) . "&limit=1");
 
-  print_r($update);
-
   if(isset($update['result'][0])){
     $update_id = $update['result'][0]['update_id'];
     $chat_id = $update['result'][0]['message']['from']['id'];
     $name = $update['result'][0]['message']['from']['first_name'];
     $text = $update['result'][0]['message']['text'];
+
 
     echo "Chat_id: $chat_id\n";
     echo "Name: $name\n";
@@ -43,27 +44,11 @@
           $stato[(string)$chat_id] = 1;
           break;
 
-        case "/goro":
-          $infos = http_request("https://fuel-stations-italy.herokuapp.com/comune/".$text."");
-          //print_r($info);
-          $i = 0;
-          $contatore = 0;
-          $stringa = "";
-          foreach($infos as $info){
-            $comune[$i] = $info['ccomune'];
-            $nome[$i] = $info['cnome'];
-            $provincia[$i] = $info['cprovincia'];
-            $i++;
-            $contatore++;
-          }
-          while($i != 0){
-            $i--;
-            if($nome[$i] == '')
-              $nome[$i] = "/";
-            $stringa = $stringa."Nome: {$nome[$i]}\n";
-
-          }
-          http_request($website."/sendmessage?chat_id=".$chat_id."&text=A ".$comune[0]." ci sono ".$contatore." stazioni e sono: ".urlencode($stringa)."");
+        case "/add":
+          $msg3 = "Inserisci il nome del comune";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
+          $comune_utente = $text;
+          $stato[(string)$chat_id] = 2;
           break;
 
         default:
@@ -72,27 +57,26 @@
       }
     }else if($stato[(string)$chat_id] == 1){
       $infos = http_request("https://fuel-stations-italy.herokuapp.com/comune/".$text."");
-      //print_r($info);
-      $i = 0;
-      $contatore = 0;
-      $stringa = "";
-      foreach($infos as $info){
-        $comune[$i] = $info['ccomune'];
-        $nome[$i] = $info['cnome'];
-        $provincia[$i] = $info['cprovincia'];
-        $i++;
-        $contatore++;
-      }
-      while($i != 0){
-        $i--;
-        if($nome[$i] == '')
-          $nome[$i] = "/";
-        $stringa = $stringa."Nome: {$nome[$i]}\n";
-
-      }
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=A ".$comune[0]." ci sono ".$contatore." stazioni e sono: ".urlencode($stringa)."");
+      getDatas($infos,$website,$chat_id,$google_key);
+      $stato[(string)$chat_id] = 0;
+    }else if($stato[(string)$chat_id] == 2){
+      $msg4 = "Inserisci la provincia del comune";
+      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg4)."");
+      $provincia_utente = $text;
+      $stato[(string)$chat_id] = 3;
+    }else if($stato[(string)$chat_id] == 3){
+      $msg5 = "Inserisci la regione del comune";
+      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg5)."");
+      $regione_utente = $text;
+      $stato[(string)$chat_id] = 4;
+    }else if($stato[(string)$chat_id] == 4){
+      $msg6 = "Inserisci il nome della stazione";
+      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg6)."");
+      $nomestazione_utente = $text;
+      sendDatasStazioni($comune_utente,$provincia_utente,$regione_utente,$nomestazione_utente);
       $stato[(string)$chat_id] = 0;
     }
     file_put_contents($last_update_filename, $update_id);
   }
+}
 ?>
