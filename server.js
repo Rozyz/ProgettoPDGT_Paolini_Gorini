@@ -85,16 +85,17 @@ app.post("/user/add", verifyToken, (req, res)=>{
 	})
 })
 
-app.post("/stazione/add", verifyToken, (req, res)=>{
-	jwt.verify(req.token, 'secretkey', (err, authData)=>{
+app.post("/stazione/add", verifyToken (req, res)=>{
+	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){
 			res.sendStatus(403)
 		}else{
+
 			const cnome = req.body.cnome
 			const ccomune = req.body.ccomune
 			const cprovincia = req.body.cprovincia
       const cregione = req.body.cregione
-      const canno_inserimento = req.body.canno_inserimento      
+      //const canno_inserimento = req.body.canno_inserimento
 
 			console.log(cnome)
 			console.log(ccomune)
