@@ -25,9 +25,9 @@
 			die("Ops, cURL non funziona\n");
 	 	}
 	 $data = "cnome=Tamoil&cprovincia=PU&ccomune=Frontone&cregione=Marche";
-	 $jsonData = json_encode($data);
+
 	 curl_setopt($handle, CURLOPT_URL, $url);
-	 curl_setopt($handle, CURLOPT_POSTFIELDS, $jsonData);
+	 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 	 curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
 	 // Esecuzione della richiesta, $response = contenuto della risposta testuale
 	 $response = curl_exec($handle);
