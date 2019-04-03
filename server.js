@@ -85,17 +85,12 @@ app.post("/user/add", verifyToken, (req, res)=>{
 	})
 })
 
-<<<<<<< HEAD
 app.post("/stazione/add", (req, res)=>{
-	 /*jwt.verify(req.token, 'secretkey', (err, authData)=>{
-=======
-app.post("/stazione/add", verifyToken, (req, res)=>{
 	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
->>>>>>> aa27b04850f349a87f751a1a7893aa905030085c
 		if(err){
 			res.sendStatus(403)
 		}else{
-*/
+
 			const cnome = req.body.cnome
 			const ccomune = req.body.ccomune
 			const cprovincia = req.body.cprovincia
@@ -108,9 +103,9 @@ app.post("/stazione/add", verifyToken, (req, res)=>{
 
 			var newPostRef = db.ref("/Stazioni").push()
 			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia})
-		//	res.json({
-			//	authData
-		//	})
+			res.json({
+				authData
+			})
 		}
 	})
 })
