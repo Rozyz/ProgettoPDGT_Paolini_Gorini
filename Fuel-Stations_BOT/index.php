@@ -46,20 +46,27 @@
 
         case "/add":
           $msg3 = "Inserisci il nome del comune";
-          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
+          /*http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
           $comune_utente = $text;
-          $stato[(string)$chat_id] = 2;
+          $stato[(string)$chat_id] = 3;*/
+          http_request2("https://fuel-stations-italy.herokuapp.com/stazione/add");
+
+          $stato[(string)$chat_id] = 0;
           break;
 
         default:
-          $infoMsg = "Digita un comando valido, coglione";
+          $infoMsg = "Comando non valido!";
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($infoMsg)."");
       }
     }else if($stato[(string)$chat_id] == 1){
       $infos = http_request("https://fuel-stations-italy.herokuapp.com/comune/".$text."");
-      getDatas($infos,$website,$chat_id,$google_key);
-      $stato[(string)$chat_id] = 0;
+      getDatas($infos,$website,$chat_id,$stato,$text);
+      $stato[(string)$chat_id] = 2;
     }else if($stato[(string)$chat_id] == 2){
+      getDatas($infos,$website,$chat_id,$stato,$text);
+      $stato[(string)$chat_id] = 0;
+    }
+    /*}else if($stato[(string)$chat_id] == 2){
       $msg4 = "Inserisci la provincia del comune";
       http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg4)."");
       $provincia_utente = $text;
@@ -76,6 +83,7 @@
       sendDatasStazioni($comune_utente,$provincia_utente,$regione_utente,$nomestazione_utente);
       $stato[(string)$chat_id] = 0;
     }
+    */
     file_put_contents($last_update_filename, $update_id);
   }
 }
