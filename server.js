@@ -85,7 +85,7 @@ app.post("/user/add", verifyToken, (req, res)=>{
 	})
 })
 
-app.post("/stazione/add", (req, res)=>{
+app.post("/stazione/add",verifyToken, (req, res)=>{
 	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){
 			res.sendStatus(403)
