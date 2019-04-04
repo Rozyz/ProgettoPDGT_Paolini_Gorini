@@ -38,7 +38,7 @@
             $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                    \n/stazione\n/add";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-            $datiAuth = http_request_post("Localhost:3000/login",$name,$last_name,$chat_id);
+            $datiAuth = http_request_post("Localhost:3002/login",$name,$last_name,$chat_id,null);
             $inizio = 1;
           }
           else{
@@ -60,8 +60,21 @@
           /*http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
           $comune_utente = $text;
           $stato[(string)$chat_id] = 3;*/
-          //http_request("https://fuel-stations-italy.herokuapp.com/token/".$chat_id."");
-          //http_request_post("https://fuel-stations-italy.herokuapp.com/stazione/add",$token, $first_name, $id);
+          $dati_utente = http_request("https://fuel-stations-italy.herokuapp.com/token/".$name."");
+          $i = 0;
+          foreach($dati_utente as $dati){
+            $id[$i] = $dati['id'];
+            if($id[$i] == $dati['id']){
+              $token = $dati['token'];
+            }
+            $i++;
+          }
+
+          if(isset($token)){
+            http_request_post("Localhost:3002/stazione/add",$name,$last_name,$chat_id,$token);
+            $msg8 = "Complimenti! Hai inserito correttamente la stazione di benzina sul nostro database";
+            http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg8));
+          }
 
           $stato[(string)$chat_id] = 0;
           break;

@@ -43,7 +43,7 @@ app.get("/comune/:comune", (req, res)=>{
 })
 
 app.get("/token/:nome", (req, res)=>{
-	db.ref("/Users").orderByChild("first_name")
+	db.ref("/Users").orderByChild("id")
 	.equalTo(req.params.nome)
 	.once("value", snap => {
 		console.log(snap.val())
@@ -87,29 +87,25 @@ app.post("/login", (req, res)=>{
 	})
 })
 */
-app.post("/stazione/add",verifyToken, (req, res)=>{
-	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
+app.post("/stazione/add", (req, res)=>{
+/*	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){
 			res.sendStatus(403)
 		}else{
-
+*/
 			const cnome = req.body.cnome
 			const ccomune = req.body.ccomune
 			const cprovincia = req.body.cprovincia
       const cregione = req.body.cregione
       //const canno_inserimento = req.body.canno_inserimento
 
-			console.log(cnome)
-			console.log(ccomune)
-			console.log(cprovincia)
-
 			var newPostRef = db.ref("/Stazioni").push()
-			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia})
-			res.json({
+			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione})
+		/*	res.json({
 				authData
 			})
 		}
-	})
+	})*/
 })
 
 
@@ -130,7 +126,7 @@ function verifyToken(req, res, next){
 	}
 }
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3002
 // localhost:PORT
 app.listen(PORT, () => {
   console.log("Il server è online e ascolta sulla porta: " + PORT)
