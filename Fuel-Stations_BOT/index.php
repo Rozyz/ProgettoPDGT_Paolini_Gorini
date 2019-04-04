@@ -5,7 +5,7 @@
 
 
   $stato = [];
-
+  $inizio = 0;
   while(1){
 
   $last_update_filename = dirname(__FILE__) . '/last-update-id.txt';
@@ -34,11 +34,18 @@
     if(isset($text) && (!isset($stato[$chat_id])) || $stato[(string)$chat_id] == 0){
       switch($text) {
         case "/start":
-          $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
-                 \n/stazione\n/add";
-          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-          $datiAuth = http_request_post("Localhost:3000/login",$name,$last_name,$chat_id);
-          print_r($datiAuth);
+          if($inizio == 0){
+            $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
+                   \n/stazione\n/add";
+            http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
+            $datiAuth = http_request_post("Localhost:3000/login",$name,$last_name,$chat_id);
+            $inizio = 1;
+          }
+          else{
+            $msg = "Ti sei già autenticato! Puoi utilizzare qualunque comando disponibile";
+            http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
+          }
+
           //echo $token;
           break;
 
@@ -66,7 +73,11 @@
     }else if($stato[(string)$chat_id] == 1){
       $infos = http_request("https://fuel-stations-italy.herokuapp.com/comune/".$text."");
       getDatas($infos,$website,$chat_id,$stato,$text);
-      $stato[(string)$chat_id] = 2;
+      if(isset($infos))
+        $stato[(string)$chat_id] = 2;
+      else {
+        $stato[(string)$chat_id] = 0;
+      }
     }else if($stato[(string)$chat_id] == 2){
       getDatas($infos,$website,$chat_id,$stato,$text);
       $stato[(string)$chat_id] = 0;
