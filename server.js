@@ -130,7 +130,7 @@ function verifyToken(req, res, next){
 	}
 }
 
-const PORT = process.env.PORT || 3009
+const PORT = process.env.PORT || 3000
 // localhost:PORT
 app.listen(PORT, () => {
   console.log("Il server è online e ascolta sulla porta: " + PORT)

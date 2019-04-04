@@ -19,15 +19,17 @@
 	    return json_decode($response, true);
 	}
 
-	function http_request_post($url){
+	function http_request_post($url,$first_name,$last_name,$id){
 		$handle = curl_init($url);
 		if($handle == false) {
 			die("Ops, cURL non funziona\n");
 	 	}
-	 //$authorization = "Authorization: Bearer ".$token;
-	 $data = "first_name=Carletto&last_name=Gigi&id=20";
 
-	 //curl_setopt($handle, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization));
+	 	$data = "first_name=".$first_name."&last_name=".$last_name."&id=".$id;
+	 /*if(isset($token)){
+		 $authorization = "Authorization: Bearer ".$token;
+		 curl_setopt($handle, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization));
+	 }*/
 	 curl_setopt($handle, CURLOPT_URL, $url);
 	 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 	 curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);

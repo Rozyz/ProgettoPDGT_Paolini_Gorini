@@ -23,6 +23,7 @@
     $update_id = $update['result'][0]['update_id'];
     $chat_id = $update['result'][0]['message']['from']['id'];
     $name = $update['result'][0]['message']['from']['first_name'];
+    $last_name = $update['result'][0]['message']['from']['last_name'];
     $text = $update['result'][0]['message']['text'];
 
 
@@ -36,12 +37,10 @@
           $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                  \n/stazione\n/add";
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-          $datiAuth = http_request_post("Localhost:3009/login");
-          //$ciccio = $datiAuth['user']['first_name'];
+          $datiAuth = http_request_post("Localhost:3000/login",$name,$last_name,$chat_id);
           print_r($datiAuth);
           //echo $token;
           break;
-
 
         case "/stazione":
           $msg2 = "Inserisci il nome del comune del quale vuoi conoscere i benzinai disponibili\n";
@@ -54,6 +53,7 @@
           /*http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
           $comune_utente = $text;
           $stato[(string)$chat_id] = 3;*/
+          //http_request("https://fuel-stations-italy.herokuapp.com/token/".$chat_id."");
           //http_request_post("https://fuel-stations-italy.herokuapp.com/stazione/add",$token, $first_name, $id);
 
           $stato[(string)$chat_id] = 0;
