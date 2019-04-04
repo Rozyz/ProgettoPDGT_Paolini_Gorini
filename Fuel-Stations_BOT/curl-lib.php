@@ -19,13 +19,15 @@
 	    return json_decode($response, true);
 	}
 
-	function http_request2($url){
+	function http_request_post($url){
 		$handle = curl_init($url);
-	 	if($handle == false) {
+		if($handle == false) {
 			die("Ops, cURL non funziona\n");
 	 	}
-	 $data = "cnome=Tamoil&cprovincia=PU&ccomune=Frontone&cregione=Marche";
+	 //$authorization = "Authorization: Bearer ".$token;
+	 $data = "first_name=Carletto&last_name=Gigi&id=20";
 
+	 //curl_setopt($handle, CURLOPT_HTTPHEADER, array('Content-Type: application/json', $authorization));
 	 curl_setopt($handle, CURLOPT_URL, $url);
 	 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 	 curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);

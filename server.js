@@ -41,29 +41,31 @@ app.get("/comune/:comune", (req, res)=>{
            res.send(snap.val())
          })
 })
-app.get("/nome/:nome", (req, res)=>{
-	db.ref("/Stazioni").orderByChild("cnome")
+
+app.get("/token/:nome", (req, res)=>{
+	db.ref("/Users").orderByChild("first_name")
 	.equalTo(req.params.nome)
 	.once("value", snap => {
 		console.log(snap.val())
 		res.send(snap.val())
 	})
 })
+
 app.post("/login", (req, res)=>{
 	// mock user
-	const user = {
-		id : 2,
-		username : 'fra'
+  const user = {
+	  first_name : req.body.first_name,
+    last_name : req.body.last_name,
+	  id : req.body.id
 	}
+  jwt.sign({user}, 'secretkey', (err, token) =>{
+    res.json(token)
+    var newPostRef = db.ref("/Users").push()
+    newPostRef.set({ first_name : req.body.first_name, last_name: req.body.last_name, id: req.body.id,token: token})
+  })
 
-
-	jwt.sign({user}, 'secretkey', (err, token) =>{
-		res.json({
-			token
-		})
-	})
 })
-app.post("/user/add", verifyToken, (req, res)=>{
+/*app.post("/user/add", verifyToken, (req, res)=>{
 	jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){
 			res.sendStatus(403)
@@ -84,7 +86,7 @@ app.post("/user/add", verifyToken, (req, res)=>{
 		}
 	})
 })
-
+*/
 app.post("/stazione/add",verifyToken, (req, res)=>{
 	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
 		if(err){

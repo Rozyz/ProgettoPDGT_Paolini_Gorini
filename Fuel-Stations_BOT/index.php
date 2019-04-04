@@ -36,7 +36,12 @@
           $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                  \n/stazione\n/add";
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
+          $datiAuth = http_request_post("Localhost:3009/login");
+          //$ciccio = $datiAuth['user']['first_name'];
+          print_r($datiAuth);
+          //echo $token;
           break;
+
 
         case "/stazione":
           $msg2 = "Inserisci il nome del comune del quale vuoi conoscere i benzinai disponibili\n";
@@ -49,7 +54,7 @@
           /*http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
           $comune_utente = $text;
           $stato[(string)$chat_id] = 3;*/
-          http_request2("https://fuel-stations-italy.herokuapp.com/stazione/add");
+          //http_request_post("https://fuel-stations-italy.herokuapp.com/stazione/add",$token, $first_name, $id);
 
           $stato[(string)$chat_id] = 0;
           break;

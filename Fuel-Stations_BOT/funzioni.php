@@ -38,8 +38,6 @@
           $j++;
         }
 
-
-
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=A ".$comune[0]." ci sono ".$contatore." stazioni e sono: ".urlencode($stringa)."");
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=Inserisci il numero della stazione");
       }
@@ -52,9 +50,4 @@
       $stato[(string)$chat_id] = 0;
     }
   }
-
-  function getAddress($website,$values,$chat_id,$text){
-
-  }
-
 ?>
