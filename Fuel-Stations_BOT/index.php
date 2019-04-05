@@ -38,7 +38,7 @@
             $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                    \n/stazione\n/add";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-            $datiAuth = http_request_post("Localhost:3002/login",$name,$last_name,$chat_id,null);
+            $datiAuth = http_request_post("https://fuel-stations-italy.herokuapp.com/login",$name,$last_name,$chat_id,null);
             $inizio = 1;
           }
           else{
@@ -71,7 +71,7 @@
           }
 
           if(isset($token)){
-            http_request_post("Localhost:3002/stazione/add",$name,$last_name,$chat_id,$token);
+            http_request_post("https://fuel-stations-italy.herokuapp.com/stazione/add",$name,$last_name,$chat_id,$token);
             $msg8 = "Complimenti! Hai inserito correttamente la stazione di benzina sul nostro database";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg8));
           }
