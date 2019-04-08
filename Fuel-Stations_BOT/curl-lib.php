@@ -19,18 +19,16 @@
 	    return json_decode($response, true);
 	}
 
-	function http_request_post($url,$first_name,$last_name,$id,$token){
+	function http_request_post($url,$first_name,$last_name,$id,$token,$cnome,$ccomune,$cprovincia,$cregione,$clongitudine,$clatitudine){
 		$handle = curl_init($url);
 		if($handle == false) {
 			die("Ops, cURL non funziona\n");
 	 	}
 
 	 if(isset($token)){
-		 //$authorization = "Authorization: Bearer ".$token;
-		 $data = "cnome=Agip&ccomune=Urbino&cprovincia=PesaroeUrbino&cregione=Marche";
-		 //curl_setopt($handle, CURLOPT_HTTPHEADER, array('Accept: application/json','Content-Type: application/json', $authorization));
+		$data = "cnome=".urlencode($cnome)."&ccomune=".urlencode($ccomune)."&cprovincia=".urlencode($cprovincia)."&cregione=".urlencode($cregione)."&clongitudine=".urlencode($clongitudine)."&clatitudine=".urlencode($clatitudine);
 	 }else{
-		$data = "first_name=".$first_name."&last_name=".$last_name."&id=".$id;
+	 	$data = "first_name=".$first_name."&last_name=".$last_name."&id=".$id;
 	 }
 	 curl_setopt($handle, CURLOPT_URL, $url);
 	 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);

@@ -4,9 +4,9 @@ const app = express()
 //const mysql = require('mysql')
 const bodyParser = require('body-parser')
 
-const request = require('request')
+/*const request = require('request')
 const https = require('https')
-
+*/
 const firebase = require('firebase-admin')
 const serviceAccount = require('./serverfirebase.json')
 
@@ -43,7 +43,7 @@ app.get("/comune/:comune", (req, res)=>{
 })
 
 app.get("/token/:nome", (req, res)=>{
-	db.ref("/Users").orderByChild("id")
+	db.ref("/Users").orderByChild("first_name")
 	.equalTo(req.params.nome)
 	.once("value", snap => {
 		console.log(snap.val())
@@ -61,51 +61,23 @@ app.post("/login", (req, res)=>{
   jwt.sign({user}, 'secretkey', (err, token) =>{
     res.json(token)
     var newPostRef = db.ref("/Users").push()
-    newPostRef.set({ first_name : req.body.first_name, last_name: req.body.last_name, id: req.body.id,token: token})
+    newPostRef.set({first_name : req.body.first_name, last_name: req.body.last_name, id: req.body.id,token: token})
   })
 
 })
-/*app.post("/user/add", verifyToken, (req, res)=>{
-	jwt.verify(req.token, 'secretkey', (err, authData)=>{
-		if(err){
-			res.sendStatus(403)
-		}else{
-			const id = req.body.id
-			const first_name = req.body.first_name
-			const last_name = req.body.last_name
 
-			console.log(id)
-			console.log(first_name)
-			console.log(last_name)
-
-			var newPostRef = db.ref("/Users").push()
-			newPostRef.set({id: id, first_name : first_name, last_name : last_name})
-			res.json({
-				authData
-			})
-		}
-	})
-})
-*/
 app.post("/stazione/add", (req, res)=>{
-/*	 jwt.verify(req.token, 'secretkey', (err, authData)=>{
-		if(err){
-			res.sendStatus(403)
-		}else{
-*/
+
 			const cnome = req.body.cnome
 			const ccomune = req.body.ccomune
 			const cprovincia = req.body.cprovincia
       const cregione = req.body.cregione
-      //const canno_inserimento = req.body.canno_inserimento
+      const clongitudine = req.body.clongitudine
+      const clatitudine = req.body.clatitudine
 
 			var newPostRef = db.ref("/Stazioni").push()
-			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione})
-		/*	res.json({
-				authData
-			})
-		}
-	})*/
+			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione, clongitudine: clongitudine, clatitudine: clatitudine})
+		  res.json(ccomune)
 })
 
 
