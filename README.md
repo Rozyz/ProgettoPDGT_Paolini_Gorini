@@ -1,4 +1,4 @@
-# ProgettoPDGT_Paolini_Gorini
+# ProgettoPDGT_Paolini_Gorini :+1:
 
 ## Corso di Laurea in Informatica Applicata
 ## Piattaforme digitali per la gestione del territorio
