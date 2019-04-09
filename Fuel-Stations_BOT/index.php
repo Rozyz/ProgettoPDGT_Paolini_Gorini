@@ -38,7 +38,7 @@
             $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                    \n/stazione\n/add";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-            $datiAuth = http_request_post("Localhost:3002/login",$name,$last_name,$chat_id,null,null,null,null,null);
+            $datiAuth = http_request_post("Localhost:3002/login",$name,$last_name,$chat_id,null,null,null,null,null,null,null);
             $inizio = 1;
           }
           else{
@@ -46,7 +46,6 @@
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
           }
 
-          //echo $token;
           break;
 
         case "/stazione":
@@ -57,17 +56,17 @@
 
         case "/add":
           $dati_utente = http_request("Localhost:3002/token/".$name);
-          $i = 0;
-          foreach($dati_utente as $dati){
-            $id[$i] = $dati['id'];
-            if($id[$i] == $dati['id']){
-              $token = $dati['token'];
+          if(isset($dati_utente)){
+            $i = 0;
+            foreach($dati_utente as $dati){
+              $id[$i] = $dati['id'];
+              if($id[$i] == $dati['id']){
+                $token = $dati['token'];
+              }
+              $i++;
             }
-            $i++;
           }
-          echo $token;
-
-          if($token != ' '){
+          if(isset($token)){
             $msg3 = "Inserisci il nome del comune";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg3)."");
             $stato[(string)$chat_id] = 3;
@@ -78,57 +77,127 @@
           }
           break;
 
+          case "/esci":
+            $msg18 = "Sei tornato allo stato iniziale\nUtilizza i comandi disponibili";
+            http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg18));
+            $stato[(string)$chat_id] = 0;
+            break;
+
         default:
           $infoMsg = "Comando non valido!";
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($infoMsg)."");
       }
     }else if($stato[(string)$chat_id] == 1){
-      $infos = http_request("https://fuel-stations-italy.herokuapp.com/comune/".$text."");
-      getDatas($infos,$website,$chat_id,$stato,$text,null,null,null);
+      if(textCheck($text,$stato,$chat_id)){
+        $infos = http_request("https://fuel-stations-italy.herokuapp.com/comune/".$text."");
+        getDatas($infos,$website,$chat_id,$stato,$text,null,null,null);
+      }else{
+        if($text == "/esci")
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok");
+        else{
+          $msg11 = "Stazione errata! Inserisci un comune valido";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg11)."");
+        }
+      }
 
     }else if($stato[(string)$chat_id] == 2){
       getDatas($infos,$website,$chat_id,$stato,$text,null,null,null);
 
     }else if($stato[(string)$chat_id] == 3){
-      $comune_utente = $text;
-      echo $comune_utente;
-      $msg4 = "Inserisci la provincia del comune";
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg4)."");
-      $stato[(string)$chat_id] = 4;
+      if(textCheck($text,$stato,$chat_id)){
+        $comune_utente = $text;
+        echo $comune_utente;
+        $msg4 = "Inserisci la provincia del comune";
+        http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg4)."");
+        $stato[(string)$chat_id] = 4;
+      }else{
+        if($text == "/esci")
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok");
+        else{
+          $msg12 = "ERRORE! Inserisci un comune valido";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg12)."");
+        }
+      }
 
     }else if($stato[(string)$chat_id] == 4){
-      $provincia_utente = $text;
-      echo $provincia_utente;
-      $msg5 = "Inserisci la regione del comune";
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg5)."");
-      $stato[(string)$chat_id] = 5;
+      if(textCheck($text,$stato,$chat_id)){
+        $provincia_utente = $text;
+        echo $provincia_utente;
+        $msg5 = "Inserisci la regione del comune";
+        http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg5)."");
+        $stato[(string)$chat_id] = 5;
+      }else{
+        if($text == "/esci")
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok");
+        else{
+          $msg13 = "ERRORE! Inserisci una provincia valida";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg13)."");
+        }
+      }
 
     }else if($stato[(string)$chat_id] == 5){
-      $regione_utente = $text;
-      echo $regione_utente;
-      $msg6 = "Inserisci il nome della stazione";
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg6)."");
-      $stato[(string)$chat_id] = 6;
+      if(textCheck($text,$stato,$chat_id)){
+        $regione_utente = $text;
+        echo $regione_utente;
+        $msg6 = "Inserisci il nome della stazione";
+        http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg6)."");
+        $stato[(string)$chat_id] = 6;
+      }else{
+        if($text == "/esci")
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok");
+        else{
+          $msg14 = "ERRORE! Inserisci una regione valida";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg14)."");
+        }
+      }
 
     }else if($stato[(string)$chat_id] == 6){
-      $nomestazione_utente = $text;
-      echo $nomestazione_utente;
-      $msg7 = "Inserisci la via della stazione";
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg7)."");
-      $stato[(string)$chat_id] = 7;
+      if(is_numeric($text) || (strpos($text, '/') !== false)){
+        if($text == "/esci"){
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok");
+          $stato[(string)$chat_id] = 0;
+        }else{
+          $msg15 = "ERRORE! Inserisci un nome valido";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg15)."");
+        }
+      }else{
+        $nomestazione_utente = $text;
+        echo $nomestazione_utente;
+        $msg7 = "Inserisci la via della stazione";
+        http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg7)."");
+        $stato[(string)$chat_id] = 7;
+      }
 
     }else if($stato[(string)$chat_id] == 7){
-      $via_utente = $text;
-      echo $via_utente;
+      if(is_numeric($text) || (strpos($text, '/') !== false)){
+        if($text == "/esci"){
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok");
+          $stato[(string)$chat_id] = 0;
+        }else{
+          $msg16 = "ERRORE! Inserisci una via valida";
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg16)."");
+        }
+      }else{
+        $via_utente = $text." ".$comune_utente."";
 
-      $dati_google2 = http_request("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($via_utente)."&key=AIzaSyCtNEV0lStU80DF9xGOx0GfX30WFA0qZtY");
-
-      $latitudine = $dati_google2['results'][0]['geometry']['location']['lat'];
-      $longitudine = $dati_google2['results'][0]['geometry']['location']['lng'];
-      http_request_post("Localhost:3002/stazione/add",$name,$last_name,$chat_id,$token,$nomestazione_utente,$comune_utente,$provincia_utente,$regione_utente,$longitudine,$latitudine);
-      $msg8 = "Complimenti, hai inserito correttamente la tua stazione!\n";
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg8)."");
-      $stato[(string)$chat_id] = 0;
+        $dati_google2 = http_request("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($via_utente)."&key=".$APIkey."");
+        if($dati_google2['status'] != "ZERO_RESULTS"){
+          $via_del_comune = $dati_google2['results'][0]['formatted_address'];
+          if(strpos($via_del_comune, $comune_utente) !== false){
+            $latitudine = $dati_google2['results'][0]['geometry']['location']['lat'];
+            $longitudine = $dati_google2['results'][0]['geometry']['location']['lng'];
+            http_request_post("Localhost:3002/stazione/add",$name,$last_name,$chat_id,$token,$nomestazione_utente,$comune_utente,$provincia_utente,$regione_utente,$longitudine,$latitudine);
+            $msg8 = "Complimenti, hai inserito correttamente la tua stazione!\n";
+            http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg8)."");
+            $stato[(string)$chat_id] = 0;
+          }else{
+            $msg17 = "ERRORE! Questa via non esiste a ".$comune_utente."";
+            http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg17)."");
+          }
+        }else {
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=Questa via non esiste");
+        }
+      }
     }
     file_put_contents($last_update_filename, $update_id);
   }

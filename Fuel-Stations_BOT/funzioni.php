@@ -56,5 +56,18 @@
     }
   }
 
+  function textCheck($text,&$stato,$chat_id){
+
+    if (1 === preg_match('~[0-9]~', $text) || (strpos($text, '/') !== false)){
+      if($text != "/esci")
+        return false;
+      else{
+        $stato[(string)$chat_id] = 0;
+        return false;
+      }
+    }else {
+        return true;
+    }
+  }
 
 ?>
