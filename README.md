@@ -22,7 +22,21 @@ I componenti di questo progetto sono i seguenti:
 ## Descrizione 
 **API**
 
+Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/):
+ - Acquiosizione di open data dal sito http://datiopen.it
+ - Metodo GET:
+  * L'API restituisce tutti i dati dei distributori nel comune richiesto
+  * L'API restituisce le informazioni degli utenti autenticati 
+ - Metodo POST:
+  * L'API può ricevere i dati di una nuova stazione ed inserirla nel database
+  * L'API può ricevere i dati di un nuovo utente che desidera autotenticarsi e aggiungere le informazioni al database
 **BOT**
+
+**Fuel_stations_italy_bot** è il client bot per la piattaforma. Permette in pochi semplici passi di comincare con òe nostre web API e di eseguirne tutte le operazioni. 
+I comandi che il bot mette a disposizione sono i seguenti:
+ - */start*: permette di autenticare l'utente e quindi di abilitare il canale per quell'utente.
+ - */stazione*: restituisce tutte le stazioni del comune desiderato.
+ - */add*: qualora esista una stazione all'interno del nostro sistema, questo comando permette di inserirla.
 
 Link per l'api: https://fuel-stations-italy.herokuapp.com/
 
