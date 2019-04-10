@@ -1,15 +1,9 @@
-// load our app server using express somehow....
+// Definizione delle librerie.
 const express = require('express')
 const app = express()
-//const mysql = require('mysql')
 const bodyParser = require('body-parser')
-
-/*const request = require('request')
-const https = require('https')
-*/
 const firebase = require('firebase-admin')
 const serviceAccount = require('./serverfirebase.json')
-
 const jwt = require('jsonwebtoken')
 
 app.use(express.static('./public'))
@@ -27,10 +21,7 @@ const rootRef = firebase.database().ref();
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
-app.get("/", (req, res) => {
-  /*console.log("Responding to root route") */
-  res.send("Fuel stations")
-})
+
 
 // GET: restituisce tutti i distributori di quel comune
 app.get("/comune/:comune", (req, res)=>{
@@ -42,6 +33,7 @@ app.get("/comune/:comune", (req, res)=>{
          })
 })
 
+// GET: restituisce i dati relativi all'utente 
 app.get("/utente/:nome", (req, res)=>{
 	db.ref("/Users").orderByChild("first_name")
 	.equalTo(req.params.nome)
@@ -51,33 +43,46 @@ app.get("/utente/:nome", (req, res)=>{
 	})
 })
 
+// POST: inserimento di un utente
 app.post("/login", (req, res)=>{
-	// mock user
-  const user = {
-	  first_name : req.body.first_name,
-    last_name : req.body.last_name,
-	  id : req.body.id
+	const user = {
+		first_name : req.body.first_name,
+   		last_name : req.body.last_name,
+	  	id : req.body.id
 	}
-  jwt.sign({user}, 'secretkey', (err, token) =>{
-    res.json(token)
-    var newPostRef = db.ref("/Users").push()
-    newPostRef.set({first_name : req.body.first_name, last_name: req.body.last_name, id: req.body.id,token: token})
-  })
-
+	if(typeof id == 'undefined' || typeof last_name == 'undefined' || typeof first_name == 'undefined'){
+		res.sendStatus(400)
+	}
+	else{
+		jwt.sign({user}, 'secretkey', (err, token) =>{
+    		res.json(token)
+    		var newPostRef = db.ref("/Users").push()
+    		newPostRef.set({first_name : req.body.first_name, last_name: req.body.last_name, id: req.body.id,token: token})
+  		})
+	}
 })
 
 app.post("/stazione/add", (req, res)=>{
 
-			const cnome = req.body.cnome
-			const ccomune = req.body.ccomune
-			const cprovincia = req.body.cprovincia
-      const cregione = req.body.cregione
-      const clongitudine = req.body.clongitudine
-      const clatitudine = req.body.clatitudine
-
-			var newPostRef = db.ref("/Stazioni").push()
-			newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione, clongitudine: clongitudine, clatitudine: clatitudine})
-		  res.json(ccomune)
+	const cnome = req.body.cnome
+	const ccomune = req.body.ccomune
+	const cprovincia = req.body.cprovincia
+      	const cregione = req.body.cregione
+      	const clongitudine = req.body.clongitudine
+      	const clatitudine = req.body.clatitudine
+	if(typeof cnome == 'undefined' ||
+		typeof ccomune == 'undefined' ||
+		typeof cprovincia == 'undefined' ||
+		typeof cregione == 'undefined' ||
+		typeof clongitudine == 'undefined' ||
+		typeof clatitudine == 'undefined'){
+		res.sendStatus(400)
+	}
+	else{
+		var newPostRef = db.ref("/Stazioni").push()
+		newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione, clongitudine: clongitudine, clatitudine: clatitudine})
+	 	res.json(ccomune)
+	}
 })
 
 
