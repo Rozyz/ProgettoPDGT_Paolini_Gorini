@@ -45,15 +45,19 @@ app.get("/utente/:nome", (req, res)=>{
 
 // POST: inserimento di un utente
 app.post("/login", (req, res)=>{
-	const user = {
-		first_name : req.body.first_name,
-   		last_name : req.body.last_name,
-	  	id : req.body.id
-	}
-	if(typeof id == 'undefined' || typeof last_name == 'undefined' || typeof first_name == 'undefined'){
+	const reqfirst = req.body.first_name
+	const reqlast = req.body.last_name
+	const reqid = req.body.id
+	if(typeof reqid == 'undefined' || typeof reqlast == 'undefined' || typeof reqfirst == 'undefined'){
 		res.sendStatus(400)
+		console.log("ERR")
 	}
-	else{
+	else{	
+		const user = {
+			first_name : reqfirst,
+			last_name: reqlast,
+			id: reqid
+		}
 		jwt.sign({user}, 'secretkey', (err, token) =>{
     		res.json(token)
     		var newPostRef = db.ref("/Users").push()
