@@ -42,7 +42,7 @@ app.get("/comune/:comune", (req, res)=>{
          })
 })
 
-app.get("/token/:nome", (req, res)=>{
+app.get("/utente/:nome", (req, res)=>{
 	db.ref("/Users").orderByChild("first_name")
 	.equalTo(req.params.nome)
 	.once("value", snap => {

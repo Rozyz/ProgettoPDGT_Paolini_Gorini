@@ -1,8 +1,6 @@
 <?php
   require_once(dirname(__FILE__).'/token.php');
-  require_once(dirname(__FILE__).'/curl-lib.php');
   require_once(dirname(__FILE__).'/funzioni.php');
-
 
   $stato = [];
   $inizio = 0;
@@ -38,7 +36,7 @@
             $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                    \n/stazione\n/add";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-            $datiAuth = http_request_post("Localhost:3002/login",$name,$last_name,$chat_id,null,null,null,null,null,null,null);
+            $datiAuth = http_request_post("https://fuel-stations-italy.herokuapp.com/login",$name,$last_name,$chat_id,null,null,null,null,null,null,null);
             $inizio = 1;
           }
           else{
@@ -55,7 +53,7 @@
           break;
 
         case "/add":
-          $dati_utente = http_request("Localhost:3002/token/".$name);
+          $dati_utente = http_request("https://fuel-stations-italy.herokuapp.com/utente".$name);
           if(isset($dati_utente)){
             $i = 0;
             foreach($dati_utente as $dati){
@@ -186,7 +184,7 @@
           if(strpos($via_del_comune, $comune_utente) !== false){
             $latitudine = $dati_google2['results'][0]['geometry']['location']['lat'];
             $longitudine = $dati_google2['results'][0]['geometry']['location']['lng'];
-            http_request_post("Localhost:3002/stazione/add",$name,$last_name,$chat_id,$token,$nomestazione_utente,$comune_utente,$provincia_utente,$regione_utente,$longitudine,$latitudine);
+            http_request_post("https://fuel-stations-italy.herokuapp.com/stazione/add",$name,$last_name,$chat_id,$token,$nomestazione_utente,$comune_utente,$provincia_utente,$regione_utente,$longitudine,$latitudine);
             $msg8 = "Complimenti, hai inserito correttamente la tua stazione!\n";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg8)."");
             $stato[(string)$chat_id] = 0;
