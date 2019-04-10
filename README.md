@@ -32,7 +32,7 @@ I componenti di questo progetto sono i seguenti:
 
 Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/):
  - Acquisizione di open data dal sito http://datiopen.it
-   * I dati erano così strutturati:
+   * I dati sono così strutturati:
      * cnome: nome della compagnia che gestisce la stazione di benzina
      * ccomune: comune nel quale è ubicata la stazione di benzina
      * cprovincia: provincia 
