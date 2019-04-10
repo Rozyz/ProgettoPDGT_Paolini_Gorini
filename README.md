@@ -1,6 +1,6 @@
 # ProgettoPDGT_Paolini_Gorini 
 # :fuelpump: Fuel Stations Italy :fuelpump:
-# Trova la stazione di benzina più vicina a te per non rimanere mai a secco! :+1:
+## Trova la stazione di benzina più vicina a te per non rimanere mai a secco! :+1:
 
 ### Corso di Laurea in Informatica Applicata
 ### Piattaforme digitali per la gestione del territorio
@@ -8,6 +8,9 @@
 ## Studenti:
  - [Paolo Paolini matricola 276803](https://github.com/Rozyz)
  - [Francesco Gorini matricola 278123](https://github.com/francescogorini)
+
+## Appello:
+ Primo appello sessione estiva: 05/06/2019
 
 ## Obiettivi
 Il progetto Fuel Stations Italy si pone i seguenti obiettivi:
@@ -19,14 +22,27 @@ I componenti di questo progetto sono i seguenti:
   1. Web API, sviluppata in linguaggio **NODEJS + EXPRESS**
   2. Client Bot Telegram, sviluppato in linguaggio **PHP**
   
-  
-![](https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.jpg)
+  <p align="center">
+    <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.jpg">
+  </p>
+
 ## Descrizione 
 
 **API**
 
 Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/):
- - Acquiosizione di open data dal sito http://datiopen.it
+ - Acquisizione di open data dal sito http://datiopen.it
+   * I dati sono così strutturati:
+     * cnome: nome della compagnia che gestisce la stazione di benzina
+     * ccomune: comune nel quale è ubicata la stazione di benzina
+     * cprovincia: provincia 
+     * cregione: regione
+     * canno_inserimento: anno del carimento nella struttura 
+     * cdata_e_ora_inserimento: data e ora dell'inserimento
+     * cidentificatore_in_openstreetmap: identificatore nell'open street map
+     * clatitudine: latitudine a cui è posizionata la stazione
+     * clongitudine: longitudine a cui è posizionata la stazione
+   * I dati sono forniti in vari formati ed è stato scelto il formato JSON
  - Metodo GET:
    * L'API restituisce tutti i dati dei distributori nel comune richiesto
    * L'API restituisce le informazioni degli utenti autenticati 
