@@ -24,20 +24,15 @@
     $last_name = $update['result'][0]['message']['from']['last_name'];
     $text = $update['result'][0]['message']['text'];
 
-
-    echo "Chat_id: $chat_id\n";
-    echo "Name: $name\n";
-    echo "Text: $text\n";
-
     if(isset($text) && (!isset($stato[$chat_id])) || $stato[(string)$chat_id] == 0){
       switch($text) {
         case "/start":
-          if(!isset($inizio[$chat_id])) || $inzio[(string)$chat_id] == 0){
+          if(!isset($inizio[$chat_id]) || $inzio[(string)$chat_id] == 0){
             $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                    \n/stazione\n/add";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
-            $datiAuth = http_request_post("https://fuel-stations-italy.herokuapp.com/login",$name,$last_name,$chat_id,null,null,null,null,null,null,null);
-            $inzio[(string)$chat_id] = 0;
+            http_request_post("https://fuel-stations-italy.herokuapp.com/login",$name,$last_name,$chat_id,null,null,null,null,null,null,null);
+            $inzio[(string)$chat_id] = 1;
           }else{
             $msg = "Ti sei già autenticato! Puoi utilizzare qualunque comando disponibile";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
@@ -74,7 +69,7 @@
           break;
 
           case "/esci":
-            $msg18 = "Sei tornato allo stato iniziale\nUtilizza i comandi disponibili";
+            $msg18 = "Sei già nello stato iniziale!\nUtilizza i comandi disponibili";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg18));
             $stato[(string)$chat_id] = 0;
             break;
@@ -102,7 +97,6 @@
     }else if($stato[(string)$chat_id] == 3){
       if(textCheck($text,$stato,$chat_id)){
         $comune_utente = $text;
-        echo $comune_utente;
         $msg4 = "Inserisci la provincia del comune";
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg4)."");
         $stato[(string)$chat_id] = 4;
@@ -118,7 +112,6 @@
     }else if($stato[(string)$chat_id] == 4){
       if(textCheck($text,$stato,$chat_id)){
         $provincia_utente = $text;
-        echo $provincia_utente;
         $msg5 = "Inserisci la regione del comune";
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg5)."");
         $stato[(string)$chat_id] = 5;
@@ -134,7 +127,6 @@
     }else if($stato[(string)$chat_id] == 5){
       if(textCheck($text,$stato,$chat_id)){
         $regione_utente = $text;
-        echo $regione_utente;
         $msg6 = "Inserisci il nome della stazione";
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg6)."");
         $stato[(string)$chat_id] = 6;
@@ -158,7 +150,6 @@
         }
       }else{
         $nomestazione_utente = $text;
-        echo $nomestazione_utente;
         $msg7 = "Inserisci la via della stazione";
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg7)."");
         $stato[(string)$chat_id] = 7;
@@ -176,7 +167,7 @@
       }else{
         $via_utente = $text." ".$comune_utente."";
 
-        $dati_google2 = http_request("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($via_utente)."&key=".$APIkey."");
+        $dati_google2 = http_request("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($via_utente)."&key=".$google_key."");
         if($dati_google2['status'] != "ZERO_RESULTS"){
           $via_del_comune = $dati_google2['results'][0]['formatted_address'];
           if(strpos($via_del_comune, $comune_utente) !== false){
