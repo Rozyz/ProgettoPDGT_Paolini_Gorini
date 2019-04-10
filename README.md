@@ -31,7 +31,18 @@ I componenti di questo progetto sono i seguenti:
 **API**
 
 Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/):
- - Acquiosizione di open data dal sito http://datiopen.it
+ - Acquisizione di open data dal sito http://datiopen.it
+   * I dati erano così strutturati:
+     * cnome: nome della compagnia che gestisce la stazione di benzina
+     * ccomune: comune nel quale è ubicata la stazione di benzina
+     * cprovincia: provincia 
+     * cregione: regione
+     * canno_inserimento: anno del carimento nella struttura 
+     * cdata_e_ora_inserimento: data e ora dell'inserimento
+     * cidentificatore_in_openstreetmap: identificatore nell'open street map
+     * clatitudine: latitudine a cui è posizionata la stazione
+     * clongitudine: longitudine a cui è posizionata la stazione
+   * I dati sono forniti in vari formati ed è stato scelto il formato JSON
  - Metodo GET:
    * L'API restituisce tutti i dati dei distributori nel comune richiesto
    * L'API restituisce le informazioni degli utenti autenticati 
