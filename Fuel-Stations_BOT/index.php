@@ -27,12 +27,12 @@
     if(isset($text) && (!isset($stato[$chat_id])) || $stato[(string)$chat_id] == 0){
       switch($text) {
         case "/start":
-          if(!isset($inizio[$chat_id]) || $inzio[(string)$chat_id] == 0){
+          if(!isset($inizio[$chat_id]) || $inizio[(string)$chat_id] == 0){
             $msg = "Ciao $name e benvenuto!\nEcco a te la lista dei comandi disponibili su questo bot.
                    \n/stazione\n/add";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
             http_request_post("https://fuel-stations-italy.herokuapp.com/login",$name,$last_name,$chat_id,null,null,null,null,null,null,null);
-            $inzio[(string)$chat_id] = 1;
+            $inizio[(string)$chat_id] = 1;
           }else{
             $msg = "Ti sei già autenticato! Puoi utilizzare qualunque comando disponibile";
             http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($msg)."");
