@@ -18,7 +18,9 @@ Il progetto Fuel Stations Italy si pone i seguenti obiettivi:
 I componenti di questo progetto sono i seguenti:
   1. Web API, sviluppata in linguaggio **NODEJS + EXPRESS**
   2. Client Bot Telegram, sviluppato in linguaggio **PHP**
-[IMG](https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.drawio)
+  
+  
+![](https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.jpg)
 ## Descrizione 
 
 **API**
