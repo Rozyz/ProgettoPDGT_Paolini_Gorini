@@ -1,4 +1,3 @@
-# ProgettoPDGT_Paolini_Gorini 
 # :fuelpump: Fuel Stations Italy :fuelpump:
 ## Trova la stazione di benzina più vicina a te per non rimanere mai a secco! :+1:
 
@@ -21,7 +20,6 @@ Il progetto Fuel Stations Italy si pone i seguenti obiettivi:
 I componenti di questo progetto sono i seguenti:
   1. Web API, sviluppata in linguaggio **NODEJS + EXPRESS**
   2. Client Bot Telegram, sviluppato in linguaggio **PHP**
-  
   <p align="center">
     <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.jpg">
   </p>
@@ -49,7 +47,10 @@ Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://ap
  - Metodo POST:
    * L'API può ricevere i dati di una nuova stazione ed inserirla nel database
    * L'API può ricevere i dati di un nuovo utente che desidera autotenticarsi e aggiungere le informazioni al database
-  
+
+Il client utilizza servizi esterni, tramite le loro API HTTP. 
+La richiesta è stata fatta alle API di Google: questo servizio è stato molto utile in quanto è possibile, grazie ad esso, ricavare le coordinate geografiche in termini di longitudine e latitudine dall'indirizzo di una città ([Geocoding](https://en.wikipedia.org/wiki/Geocoding)) e viceversa ([reverse Geocoding](https://en.wikipedia.org/wiki/Reverse_geocoding)).
+
 **BOT**
 
 **Fuel_stations_italy_bot** è il client bot per la piattaforma. Permette in pochi semplici passi di comincare con le nostre web API e di eseguirne tutte le operazioni. 
