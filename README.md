@@ -58,7 +58,10 @@ I comandi che il bot mette a disposizione sono i seguenti:
  - */start*: permette di autenticare l'utente e quindi di abilitare il canale per quell'utente.
  - */stazione*: restituisce tutte le stazioni del comune desiderato.
  - */add*: qualora esista una stazione all'interno del nostro sistema, questo comando permette di inserirla.
+ - */esci*: permette dit tornare alla configurazioone iniziale.
 
+## Link del progetto
+
+Link per il bot:
 Link per l'api: https://fuel-stations-italy.herokuapp.com/
-
 Link per la documentazione: https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/
