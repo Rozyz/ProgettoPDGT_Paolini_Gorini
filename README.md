@@ -21,7 +21,7 @@ I componenti di questo progetto sono i seguenti:
   1. Web API, sviluppata in linguaggio **NODEJS + EXPRESS**
   2. Client Bot Telegram, sviluppato in linguaggio **PHP**
   <p align="center">
-    <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.jpg">
+    <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/img/FuelStations.jpg">
   </p>
 
 ## Descrizione 
