@@ -2,11 +2,9 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-const firebase = require('firebase-admin')
-const serviceAccount = require('./serverfirebase.json')
-const jwt = require('jsonwebtoken')
-
-app.use(express.static('./public'))
+const firebase = require('./configuration/node_modules/firebase-admin')
+const serviceAccount = require('./configuration/serverfirebase.json')
+const jwt = require('./configuration/node_modules/jsonwebtoken')
 
 
 // Inizializzazione del DB di firebase
