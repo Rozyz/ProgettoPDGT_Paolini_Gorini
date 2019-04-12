@@ -33,7 +33,7 @@ app.get("/comune/:comune", (req, res)=>{
          })
 })
 
-// GET: restituisce i dati relativi all'utente 
+// GET: restituisce i dati relativi all'utente
 app.get("/utente/:nome", (req, res)=>{
 	db.ref("/Users").orderByChild("first_name")
 	.equalTo(req.params.nome)
@@ -52,7 +52,7 @@ app.post("/login", (req, res)=>{
 		res.sendStatus(400)
 		console.log("ERR")
 	}
-	else{	
+	else{
 		const user = {
 			first_name : reqfirst,
 			last_name: reqlast,
@@ -88,24 +88,6 @@ app.post("/stazione/add", (req, res)=>{
 	 	res.json(ccomune)
 	}
 })
-
-
-function verifyToken(req, res, next){
-	const bearerHeader = req.headers['authorization']
-	if(typeof bearerHeader !== 'undefined'){
-		// trasforma una stringa in un array
-		const bearer = bearerHeader.split(' ')
-
-		const bearerToken = bearer[1]
-
-		req.token = bearerToken
-
-		next();
-	}else{
-		//VIETATO
-		res.sendStatus(403)
-	}
-}
 
 const PORT = process.env.PORT || 3002
 // localhost:PORT
