@@ -44,7 +44,10 @@
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($string));
           http_request($website."/sendLocation?chat_id=".$chat_id."&latitude=".$lat[$text-1]."&longitude=".$lon[$text-1]."");
           $stato[(string)$chat_id] = 0;
-        }else{
+        }else if($text == "/esci"){
+	  http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ok"));
+	  $stato[(string)$chat_id] = 0;
+	}else{
           $stringerr = "La stazione selezionata è errata!\nDigita un comando valido\n";
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringerr));
           $stato[(string)$chat_id] = 2;
