@@ -1,4 +1,3 @@
-# ProgettoPDGT_Paolini_Gorini 
 # :fuelpump: Fuel Stations Italy :fuelpump:
 ## Trova la stazione di benzina più vicina a te per non rimanere mai a secco! :+1:
 
@@ -21,7 +20,6 @@ Il progetto Fuel Stations Italy si pone i seguenti obiettivi:
 I componenti di questo progetto sono i seguenti:
   1. Web API, sviluppata in linguaggio **NODEJS + EXPRESS**
   2. Client Bot Telegram, sviluppato in linguaggio **PHP**
-  
   <p align="center">
     <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/FuelStations.jpg">
   </p>
@@ -33,15 +31,15 @@ I componenti di questo progetto sono i seguenti:
 Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/):
  - Acquisizione di open data dal sito http://datiopen.it
    * I dati sono così strutturati:
-     * cnome: nome della compagnia che gestisce la stazione di benzina
-     * ccomune: comune nel quale è ubicata la stazione di benzina
-     * cprovincia: provincia 
-     * cregione: regione
-     * canno_inserimento: anno del carimento nella struttura 
-     * cdata_e_ora_inserimento: data e ora dell'inserimento
-     * cidentificatore_in_openstreetmap: identificatore nell'open street map
-     * clatitudine: latitudine a cui è posizionata la stazione
-     * clongitudine: longitudine a cui è posizionata la stazione
+     * *cnome*: nome della compagnia che gestisce la stazione di benzina
+     * *ccomune*: comune nel quale è ubicata la stazione di benzina
+     * *cprovincia*: provincia 
+     * *cregione*: regione
+     * *canno_inserimento*: anno del carimento nella struttura 
+     * *cdata_e_ora_inserimento*: data e ora dell'inserimento
+     * *cidentificatore_in_openstreetmap*: identificatore nell'open street map
+     * *clatitudine*: latitudine a cui è posizionata la stazione
+     * *clongitudine*: longitudine a cui è posizionata la stazione
    * I dati sono forniti in vari formati ed è stato scelto il formato JSON
  - Metodo GET:
    * L'API restituisce tutti i dati dei distributori nel comune richiesto
@@ -49,7 +47,10 @@ Realizzazione di una WEB API (GET e POST) e [relativa documentazione](https://ap
  - Metodo POST:
    * L'API può ricevere i dati di una nuova stazione ed inserirla nel database
    * L'API può ricevere i dati di un nuovo utente che desidera autotenticarsi e aggiungere le informazioni al database
-  
+
+Il client utilizza servizi esterni, tramite le loro API HTTP. 
+La richiesta è stata fatta alle API di Google: questo servizio è stato molto utile in quanto è possibile, grazie ad esso, ricavare le coordinate geografiche in termini di longitudine e latitudine dall'indirizzo di una città ([Geocoding](https://en.wikipedia.org/wiki/Geocoding)) e viceversa ([reverse Geocoding](https://en.wikipedia.org/wiki/Reverse_geocoding)).
+
 **BOT**
 
 **Fuel_stations_italy_bot** è il client bot per la piattaforma. Permette in pochi semplici passi di comincare con le nostre web API e di eseguirne tutte le operazioni. 
@@ -57,7 +58,10 @@ I comandi che il bot mette a disposizione sono i seguenti:
  - */start*: permette di autenticare l'utente e quindi di abilitare il canale per quell'utente.
  - */stazione*: restituisce tutte le stazioni del comune desiderato.
  - */add*: qualora esista una stazione all'interno del nostro sistema, questo comando permette di inserirla.
+ - */esci*: permette dit tornare alla configurazioone iniziale.
 
+## Link del progetto
+
+Link per il bot:
 Link per l'api: https://fuel-stations-italy.herokuapp.com/
-
 Link per la documentazione: https://app.swaggerhub.com/apis/francescogorini/FuelStationItaly/1.0#/
