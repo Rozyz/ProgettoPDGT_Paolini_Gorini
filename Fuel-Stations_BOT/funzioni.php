@@ -7,6 +7,7 @@
       $j = 0;
       $contatore = 0;
       $stringa = "";
+      $stringa2 = "";
       $string = "";
       $coordinate = "";
 
@@ -30,14 +31,17 @@
       if($stato[(string)$chat_id] == 1){
         while($j != $i){
           $contatore++;
-          if($nome[$j] == '')
-            $nome[$j] = "/";
-          $stringa = $stringa."\n$contatore)"."$via[$j]";
+          if($j < 100)
+            $stringa = $stringa."\n$contatore)"."$via[$j]";
+          else
+            $stringa2 = $stringa2."\n$contatore)"."$via[$j]";
           $j++;
         }
 
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=A ".$comune[0]." ci sono ".$contatore." stazioni e sono: ".urlencode($stringa)."");
-        http_request($website."/sendmessage?chat_id=".$chat_id."&text=Inserisci il numero della stazione");
+        if(isset($stringa2))
+          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringa2)."");
+        http_request($website."/sendmessage?chat_id=".$chat_id."&text=Inserisci il numero corrispondente alla stazione desiderata");
         $stato[(string)$chat_id] = 2;
       }else if ($stato[(string)$chat_id] == 2){
         if(is_numeric($text) && ($text >= 1 && $text <= $i)){
@@ -51,7 +55,8 @@
         }
       }
     }else {
-      http_request($website."/sendmessage?chat_id=".$chat_id."&text=Ops.. non è stata trovata alcuna stazione di benzina in questa città. Vuoi aggiungerla tu? Digita /add e aiutaci a completare la nostra mappatura!");
+      $stringerr2 = "Ops.. non è stata trovata alcuna stazione di benzina in questa città. Vuoi aggiungerla tu? Digita /add e aiutaci a completare la nostra mappatura!";
+      http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringerr2)."");
       $stato[(string)$chat_id] = 0;
     }
   }
