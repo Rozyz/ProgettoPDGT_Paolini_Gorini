@@ -25,7 +25,7 @@
     $text = $update['result'][0]['message']['text'];
 
     file_put_contents($last_update_filename, $update_id);
-    sleep(2);
+    sleep(1);
 
     if(isset($text) && (!isset($stato[$chat_id])) || $stato[(string)$chat_id] == 0){
       switch($text) {
