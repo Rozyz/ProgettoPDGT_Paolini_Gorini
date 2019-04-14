@@ -8,9 +8,6 @@
       $contatore = 0;
       $stringa = "";
       $stringa2 = "";
-      $stringa3 = "";
-      $stringa4 = "";
-      $stringa5 = "";
       $string = "";
       $coordinate = "";
 
@@ -36,26 +33,14 @@
           $contatore++;
           if($j < 100)
             $stringa = $stringa."\n$contatore)"."$via[$j]";
-          else if($j >= 100 && $j < 200)
-            $stringa2 = $stringa2."\n$contatore)"."$via[$j]";
-          else if($j >= 200 && $j < 300)
-            $stringa3 = $stringa3."\n$contatore)"."$via[$j]";
-          else if($j >= 300 && $j < 400)
-            $stringa4 = $stringa4."\n$contatore)"."$via[$j]";
           else
-            $stringa5 = $stringa5."\n$contatore)"."$via[$j]";
+            $stringa2 = $stringa2."\n$contatore)"."$via[$j]";
           $j++;
         }
 
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=A ".$comune[0]." ci sono ".$contatore." stazioni e sono: ".urlencode($stringa)."");
         if(isset($stringa2))
           http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringa2)."");
-        if(isset($stringa3))
-          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringa3)."");
-        if(isset($stringa4))
-          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringa4)."");
-        if(isset($stringa5))
-          http_request($website."/sendmessage?chat_id=".$chat_id."&text=".urlencode($stringa5)."");
         http_request($website."/sendmessage?chat_id=".$chat_id."&text=Inserisci il numero corrispondente alla stazione desiderata");
         $stato[(string)$chat_id] = 2;
       }else if ($stato[(string)$chat_id] == 2){
