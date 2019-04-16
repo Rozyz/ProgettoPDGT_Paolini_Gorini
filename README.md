@@ -57,11 +57,11 @@ La richiesta è stata fatta alle API di Google: questo servizio è stato molto u
 I comandi che il bot mette a disposizione sono i seguenti:
  - */start*: permette di autenticare l'utente e quindi di abilitare il canale per quell'utente.
  <p align="left">
-    <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/img/screenshot1.png">
+    <img width="216" height="396" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/img/screenshot1.png">
   </p>
  - */stazione*: restituisce tutte le stazioni del comune desiderato.
  <p align="right">
-    <img width="460" height="300" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/img/screenshot2.png">
+    <img width="216" height="396" src="https://github.com/Rozyz/ProgettoPDGT_Paolini_Gorini/blob/master/img/screenshot2.png">
   </p>
  - */add*: qualora esista una stazione all'interno del nostro sistema, questo comando permette di inserirla.
  - */esci*: permette dit tornare alla configurazioone iniziale.
