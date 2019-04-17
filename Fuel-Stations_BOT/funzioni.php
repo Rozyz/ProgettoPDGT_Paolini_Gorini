@@ -21,7 +21,7 @@
         $regione[$i] = $info['cregione'];
         $lat[$i] = $info['clatitudine'];
         $lon[$i] = $info['clongitudine'];
-        $dati_google = http_request("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat[$i].",".$lon[$i]."&key=AIzaSyCtNEV0lStU80DF9xGOx0GfX30WFA0qZtY");
+        $dati_google = http_request("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat[$i].",".$lon[$i]."&key=".$google_key."");
         $address[$i] = $dati_google['results'][0]['formatted_address'];
         $dato = explode ("," , $address[$i]);
         $via[$i] = $dato[0];
