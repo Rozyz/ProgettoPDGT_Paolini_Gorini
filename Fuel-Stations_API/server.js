@@ -64,27 +64,46 @@ app.post("/login", (req, res)=>{
 	}
 })
 
-app.post("/stazione/add", (req, res)=>{
-	const cnome = req.body.cnome
-	const ccomune = req.body.ccomune
-	const cprovincia = req.body.cprovincia
-      	const cregione = req.body.cregione
-      	const clongitudine = req.body.clongitudine
-      	const clatitudine = req.body.clatitudine
-	if(typeof cnome == 'undefined' ||
-		typeof ccomune == 'undefined' ||
-		typeof cprovincia == 'undefined' ||
-		typeof cregione == 'undefined' ||
-		typeof clongitudine == 'undefined' ||
-		typeof clatitudine == 'undefined'){
-		res.sendStatus(400)
-	}
-	else{
-		var newPostRef = db.ref("/Stazioni").push()
-		newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione, clongitudine: clongitudine, clatitudine: clatitudine})
-	 	res.json(ccomune)
-	}
+app.post("/stazione/add", verifyToken, (req, res)=>{
+	jwt.verify(req.token, 'secretkey', (err, authData)=>{
+		if(err){
+			res.sendStatus(403)
+		}
+		else{
+			const cnome = req.body.cnome
+			const ccomune = req.body.ccomune
+			const cprovincia = req.body.cprovincia
+      			const cregione = req.body.cregione
+      			const clongitudine = req.body.clongitudine
+      			const clatitudine = req.body.clatitudine
+			if(typeof cnome == 'undefined' ||
+			   typeof ccomune == 'undefined' ||
+		   	   typeof cprovincia == 'undefined' ||
+		   	   typeof cregione == 'undefined' ||
+		   	   typeof clongitudine == 'undefined' ||
+		   	   typeof clatitudine == 'undefined'){
+				res.sendStatus(400)
+			}
+			else{
+				var newPostRef = db.ref("/Stazioni").push()
+				newPostRef.set({cnome: cnome, ccomune: ccomune, cprovincia: cprovincia, cregione: cregione, clongitudine: clongitudine, clatitudine: clatitudine})
+	 			res.json(authData)
+			}
+		}
+	})
 })
+
+function verifyToken(req, res, next){
+	const bearerHeader = req.headers['authorization']
+	if(typeof bearerHeader !== 'undefined'){
+		const bearer = bearerHeader.split(' ')
+		const bearerToken = bearer[1]
+		req.token = bearerToken
+		next();
+	}else{
+		res.sendStatus(403)
+	}
+}
 
 const PORT = process.env.PORT || 3002
 // localhost:PORT

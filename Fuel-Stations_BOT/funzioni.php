@@ -95,7 +95,7 @@
 
   // Semplice libreria per le creazione di richieste HTTP
 	function http_request($url)
-	{
+	{    
 	    $handle = curl_init($url);
 	    if($handle == false) {
 	        die("Ops, cURL non funziona\n");
@@ -118,7 +118,11 @@
 		if($handle == false) {
 			die("Ops, cURL non funziona\n");
 	 	}
-
+		$header = array(
+			'Accept: application/json',
+			'Content-Type: application/x-www-form-urlencoded',
+			'Authorization: Basic '.$token
+		);
 	 if(isset($token)){
 		$data = "cnome=".urlencode($cnome)."&ccomune=".urlencode($ccomune)."&cprovincia=".urlencode($cprovincia)."&cregione=".urlencode($cregione)."&clongitudine=".urlencode($clongitudine)."&clatitudine=".urlencode($clatitudine);
 	 }else{
@@ -127,6 +131,7 @@
 	 curl_setopt($handle, CURLOPT_URL, $url);
 	 curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
 	 curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
+	 curl_setopt($handle, CURLOPT_HTTPHEADER, $header);
 	 // Esecuzione della richiesta, $response = contenuto della risposta testuale
 	 $response = curl_exec($handle);
 	 $status = curl_getinfo($handle, CURLINFO_HTTP_CODE);
